@@ -29,7 +29,8 @@ public class left_view {
 		return ans;
 	}
 
-	public static void leftViewRecursion(BinaryTreeNode<Integer> root, ArrayList<Integer> ans, int lvl){
+	// Recursive Approach 
+	public static void leftViewRecursion(BinaryTreeNode<Integer> root, ArrayList<Integer> ans, int lvl){		// M1 - using lvl == ans.size() 
 		if(root == null) {
 			return;
 		}
@@ -38,6 +39,32 @@ public class left_view {
 		}
 		leftViewRecursion(root.left, ans, lvl+1);
 		leftViewRecursion(root.right, ans, lvl+1);
+	}
+	
+	private static int maxLevel = -1;
+	public static void leftViewRecursion2(BinaryTreeNode<Integer> root, ArrayList<Integer> ans, int lvl){ 		// M2 - using static variable
+		if(root == null) {
+			return;
+		}
+		if(lvl > maxLevel) {
+			ans.add(root.data);
+			maxLevel = lvl;
+		}
+		leftViewRecursion2(root.left, ans, lvl+1);
+		leftViewRecursion2(root.right, ans, lvl+1);
+	}
+
+	public static int leftViewRecursion3(BinaryTreeNode<Integer> root, ArrayList<Integer> ans, int maxLevel, int lvl){ 	// M3 - passing maxLevel as parameter and returning it
+		if(root == null) {
+			return maxLevel;
+		}
+		if(lvl > maxLevel) {
+			ans.add(root.data);
+			maxLevel = lvl;
+		}
+		maxLevel = leftViewRecursion3(root.left, ans, maxLevel, lvl+1);
+		maxLevel = leftViewRecursion3(root.right, ans, maxLevel, lvl+1);
+		return maxLevel;
 	}
 
 	public static void main(String[] args) {
